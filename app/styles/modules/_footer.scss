@@ -1,0 +1,20 @@
+.footer {
+	border-top: 1px solid #ebebeb;
+	background-color: #f8f8f8;
+}
+
+.footer__logo svg {
+	height: 36px;
+}
+
+.footer__contact {
+	font-size: $font-size-sm;
+}
+
+.footer__contact ul li {
+	margin-bottom: 0;
+}
+
+.footer__contact ul li a {
+	color: #9e9fa0;
+}

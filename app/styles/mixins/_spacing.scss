@@ -1,0 +1,44 @@
+// ----
+// libsass (v3.3.2)
+// ----
+
+$spacer: 6;
+$spacer-x: $spacer;
+$spacer-y: $spacer;
+$unit: px;
+
+$spacers: ();
+
+@for $i from 0 through 20 {
+  $spacers: map-merge($spacers, (
+    $i: (
+      x: $spacer-x * $i,
+      y: $spacer-y * $i
+    )
+  )) 
+}
+
+@each $prop, $abbrev in (margin: m, padding: p) {
+  @each $size, $lengths in $spacers {
+    $length-x:   map-get($lengths, x);
+    $length-y:   map-get($lengths, y);
+    $x-units: ($length-x+$unit);
+    $y-units: ($length-y+$unit);
+
+    .#{$abbrev}a#{$length-x} { #{$prop}:        $y-units $x-units !important; } // a = All sides
+    .#{$abbrev}t#{$length-x} { #{$prop}-top:    $y-units !important; }
+    .#{$abbrev}r#{$length-x} { #{$prop}-right:  $x-units !important; }
+    .#{$abbrev}b#{$length-x} { #{$prop}-bottom: $y-units !important; }
+    .#{$abbrev}l#{$length-x} { #{$prop}-left:   $x-units !important; }
+
+    // Axes
+    .#{$abbrev}x#{$length-x} {
+      #{$prop}-right:  $x-units !important;
+      #{$prop}-left:   $x-units !important;
+    }
+    .#{$abbrev}y#{$length-x} {
+      #{$prop}-top:    $y-units !important;
+      #{$prop}-bottom: $y-units !important;
+    }
+  }
+}

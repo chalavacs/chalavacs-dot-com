@@ -1,0 +1,41 @@
+/* Colors
+==========================*/
+$gray-base:              #000 !default;
+$gray-darker:            lighten($gray-base, 13.5%) !default; // #222
+$gray-dark:              lighten($gray-base, 20%) !default;   // #333
+$gray:                   lighten($gray-base, 33.5%) !default; // #555
+$gray-light:             lighten($gray-base, 46.7%) !default; // #777
+$gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
+
+$white: #fff;
+
+$brand-primary:         darken(#428bca, 6.5%) !default; // #337ab7
+$brand-success:         #5cb85c !default;
+$brand-info:            #5bc0de !default;
+$brand-warning:         #f0ad4e !default;
+$brand-danger:          #d9534f !default;
+
+.bg-dark { background: $gray-dark; }
+.bg-darker { background: $gray-darker; }
+
+.bg-dark p,
+nav.bg-dark p,
+footer.bg-dark p,
+.bg-primary p,
+.bg-dark span,
+nav.bg-dark span,
+footer.bg-dark span,
+.bg-primary span,
+.bg-dark li,
+nav.bg-dark li,
+footer.bg-dark li,
+.bg-primary li,
+.bg-dark h1,
+.bg-dark h2,
+.bg-dark h3,
+.bg-dark h4,
+.bg-dark h5,
+.bg-dark h6,
+.bg-dark a {
+	color: $white;
+}
