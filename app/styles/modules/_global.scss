@@ -3,6 +3,57 @@ html, body {
   width: 100%;
 }
 
+.preloader {
+  background: linear-gradient(180deg, #fff 66%, #f7f7f7 100%);
+  z-index: $zIndex-9;
+  overflow: hidden;
+}
+
+.preloader,
+.preloader__progress,
+.preloader__progressbar {
+  transition: transform .65s cubic-bezier(.52, .01, .16, 1);
+  transform: translateX(0);
+  transform-origin: 100% 0;
+}
+
+.preloader[data-active=off],
+.preloader[data-active=off] .preloader__progress,
+.preloader[data-active=off] .preloader__progressbar {
+  pointer-events: none;
+  transform: translateX(100vw);
+}
+
+.preloader[data-active=off] .preloader__progressbar { transition-delay: 0s }
+.preloader[data-active=off] .preloader__progress { transition-delay: .24s }
+.preloader[data-active=off] { transition-delay: .48s }
+
+
+.preloader__progress {
+  position: absolute;
+  font-family: $font-family-alt;
+  color: #f8f8f8;
+  left: 8%;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  font-size: 25vw;
+  z-index: 500;
+}
+
+.preloader__progressbar {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #5288e2;
+}
+
+//
+// Lists
+
 ul {
   padding-left: 0;
   list-style: none;

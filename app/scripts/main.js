@@ -2,6 +2,53 @@
 // GreenSock Animations
 //
 
+// Preload JS
+var queue = new createjs.LoadQueue(),
+    $preloader = $('.preloader'),
+    $progress = $('.preloader__progress'),
+    $progressbar = $('.preloader__progressbar');
+
+queue.on('complete',     onComplete);
+queue.on('error',        onError);
+queue.on('fileload',     onFileLoad);
+queue.on('fileprogress', onFileProgress);
+queue.on('progress',     onProgress);
+
+queue.loadManifest([
+  {
+    id:   '1',
+    src:  'http://upload.wikimedia.org/wikipedia/commons/a/a2/Polycyclic_Aromatic_Hydrocarbons_In_Space.jpg'
+  },
+  {
+    id: '2',
+    src: 'http://static3.businessinsider.com/image/522746c56bb3f72e2a316155/photo-airbus-proves-its-huge-new-warplane-doesnt-need-a-paved-runway.jpg'
+  },
+  {
+    id:   '3',
+    src:  'http://www.chem.gla.ac.uk/staff/wynne/i/2005/TRVS/TRVS-group-photo-huge.jpg'
+  }
+]);
+
+function onError(event) {}
+
+function onFileLoad(event) {}
+
+function onFileProgress(event) {}
+
+function onProgress(event) {
+    console.log("loading...");
+    var progress = Math.round(event.loaded * 100);
+    $progress.text(progress + '%');
+    $progressbar.css({
+        'width': progress + '%'
+    });
+}
+
+function onComplete(event) {
+    dataActiveOff($preloader);
+    tl.play();
+}
+
 //
 // Preloader Animation
 
@@ -86,7 +133,9 @@ var heroInner = $('.hero__inner'),
 
 var tl = new TimelineLite({ 
     repeat:0, 
-    yoyo:false 
+    yoyo:false,
+    paused:true,
+    delay: 1
 });
 
 tl.fromTo(innerBorder1, 0.25, {height:0}, {height:'100%', autoAlpha:1})
@@ -96,7 +145,7 @@ tl.fromTo(innerBorder1, 0.25, {height:0}, {height:'100%', autoAlpha:1})
 
 .add("homeAll")
 
-tl.to(".home__headshot", 0.3, {
+.to(".home__headshot", 0.3, {
     x:"-30",
     autoAlpha:1,
     ease: Power1.easeOut
@@ -130,8 +179,9 @@ tl.to('.scrollLink', 0.6, {
 //
 $(function() {
 
+    dataActiveOn($preloader);
+
     if(isMobile()){
-        console.log("is mobile");
     }
 
     // Performs a smooth page scroll to an anchor on the same page.
@@ -211,6 +261,10 @@ function dataActiveOff(e) {
 }
 
 function dataActiveOn(e) {
+    e.attr("data-active", "on")
+}
+
+function animation(e) {
     e.attr("data-active", "on")
 }
 

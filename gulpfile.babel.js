@@ -1,15 +1,16 @@
-// generated on 2016-04-20 using generator-gulp-webapp 1.0.3
-import gulp from 'gulp';
-import gulpLoadPlugins from 'gulp-load-plugins';
-import browserSync from 'browser-sync';
-import del from 'del';
-import {stream as wiredep} from 'wiredep';
+// generated on 2016-05-25 using generator-webapp 2.1.0
+const gulp = require('gulp');
+const gulpLoadPlugins = require('gulp-load-plugins');
+const browserSync = require('browser-sync');
+const del = require('del');
+const wiredep = require('wiredep').stream;
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
 var httpProxy = require('http-proxy'),
-    connect = require('gulp-connect-php');
+    connect = require('gulp-connect-php'),
+    cache = require('gulp-cache');
 
 gulp.task('styles', () => {
   return gulp.src('app/styles/*.scss')
@@ -72,19 +73,19 @@ gulp.task('html', ['styles','templates'], () => {
 });
 
 gulp.task('images', () => {
-  return gulp.src('app/img/**/*')
-    .pipe($.if($.if.isFile, $.cache($.imagemin({
-      progressive: true,
-      interlaced: true,
-      // don't remove IDs from SVGs, they are often used
-      // as hooks for embedding and styling
-      svgoPlugins: [{cleanupIDs: false}]
-    }))
-    .on('error', function (err) {
-      console.log(err);
-      this.end();
+    return gulp.src('app/img/**/*')
+    .pipe($.cache($.imagemin({
+        verbose: true,
+        optimizationLevel: 3,
+        progressive: true,
+        interlaced: true,
+        svgoPlugins: [{cleanupIDs: false}]
     })))
     .pipe(gulp.dest('dist/images'));
+});
+
+gulp.task('clear', function (done) {
+  return cache.clearAll(done);
 });
 
 gulp.task('fonts', () => {
@@ -98,6 +99,7 @@ gulp.task('fonts', () => {
 gulp.task('extras', () => {
   return gulp.src([
     'app/*.*',
+    'app/**/*.php',
     '!app/*.html'
   ], {
     dot: true
@@ -155,6 +157,8 @@ gulp.task('php-serve', ['styles', 'fonts'], function () {
 
 });
 
+gulp.task('php-serve:dist', () => {
+}); 
 
 
 gulp.task('serve', ['styles', 'templates', 'fonts'], () => {
@@ -213,20 +217,28 @@ gulp.task('serve:test', () => {
 
 // inject bower components
 gulp.task('wiredep', () => {
+
   gulp.src('app/styles/*.scss')
-    .pipe(wiredep({
-      ignorePath: /^(\.\.\/)+/
-    }))
-    .pipe(gulp.dest('app/styles'));
+  .pipe(wiredep({
+    ignorePath: /^(\.\.\/)+/
+  }))
+  .pipe(gulp.dest('app/styles'));
 
   gulp.src('app/*.html')
-    .pipe(wiredep({
-      ignorePath: /^(\.\.\/)*\.\./
-    }))
-    .pipe(gulp.dest('app'));
+  .pipe(wiredep({
+    ignorePath: /^(\.\.\/)*\.\./
+  }))
+  .pipe(gulp.dest('app'));
+
+  gulp.src('app/**/*.php')
+  .pipe(wiredep({
+    ignorePath: /^(\.\.\/)*\.\./
+  }))
+  .pipe(gulp.dest('app'));
+
 });
 
-gulp.task('build', ['lint', 'html', 'images', 'fonts', 'extras'], () => {
+gulp.task('build', ['html', 'images', 'fonts', 'extras'], () => {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 

@@ -1,4 +1,74 @@
 //
+// Position
+//
+
+.viewport-full-size {
+    width: 100vw;
+    height: 100vh
+}
+
+.viewport-full-height {
+    height: 100vh
+}
+
+.full-size,.full-width {
+    width: 100%
+}
+
+.full-height,.full-size {
+    height: 100%
+}
+
+.half-width {
+    width: 50%
+}
+
+.center-l-t,.pos-a,.pos-a-b-l,.pos-a-b-r,.pos-a-center,.pos-a-t-l,.pos-a-t-r,p strong::after {
+    position: absolute
+}
+
+.pos-a-center {
+    left: 50%;
+    top: 50%
+}
+
+.pos-a-t-l {
+    top: 0;
+    left: 0
+}
+
+.pos-a-b-l {
+    bottom: 0;
+    left: 0
+}
+
+.pos-a-t-r {
+    top: 0;
+    right: 0
+}
+
+.pos-a-b-r {
+    bottom: 0;
+    right: 0
+}
+
+.pos-f,.pos-f-bottom,.pos-f-t-l {
+    position: fixed
+}
+
+.pos-f-t-l {
+    top: 0;
+    left: 0
+}
+
+.pos-f-bottom {
+    bottom: 0;
+    left: 0
+}
+
+
+
+//
 // Floats
 //
 
@@ -91,15 +161,15 @@
   .text-xl-center { text-align: center; }
 }
 
-// Transformation
+// Font Styles
+
 
 .text-lowercase      { text-transform: lowercase; }
 .text-uppercase      { text-transform: uppercase; }
 .text-capitalize     { text-transform: capitalize; }
 
-// Font Style
-
 .text-italic  { font-style: italic; }
+.text-medium  { font-weight: $font-medium; }
 
 // Contextual colors
 
