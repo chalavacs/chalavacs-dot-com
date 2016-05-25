@@ -81,7 +81,7 @@ gulp.task('images', () => {
         interlaced: true,
         svgoPlugins: [{cleanupIDs: false}]
     })))
-    .pipe(gulp.dest('dist/images'));
+    .pipe(gulp.dest('dist/img'));
 });
 
 gulp.task('clear', function (done) {
@@ -145,7 +145,7 @@ gulp.task('php-serve', ['styles', 'fonts'], function () {
         'app/*.html',
         'app/**/*.php',
         'app/scripts/**/*.js',
-        'app/images/**/*',
+        'app/img/**/*',
         '.tmp/fonts/**/*'
     ]).on('change', reload);
 
@@ -176,7 +176,7 @@ gulp.task('serve', ['styles', 'templates', 'fonts'], () => {
   gulp.watch([
     'app/*.html',
     'app/scripts/**/*.js',
-    'app/images/**/*',
+    'app/img/**/*',
     '.tmp/templates/**/*.js',
     '.tmp/fonts/**/*'
   ]).on('change', reload);
